@@ -14,7 +14,10 @@ from PyInstaller.utils.hooks import (
     collect_submodules,
 )
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+# NOTE: PyInstaller executes .spec via exec() and may not provide __file__.
+# SPECPATH is injected by PyInstaller and points to the directory containing this spec.
+_spec_dir = globals().get("SPECPATH")
+PROJECT_ROOT = Path(_spec_dir).resolve() if _spec_dir else Path.cwd().resolve()
 APP_ROOT = PROJECT_ROOT / "fbai"
 
 hiddenimports = []
