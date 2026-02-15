@@ -55,7 +55,9 @@ for cfg in [
         datas.append((str(p), "."))
 
 a = Analysis(
-    ["fbai/facebook_dashboard.py"],
+    # facebook_dashboard.py intentionally does not call main() when frozen;
+    # launcher.py is the correct frozen entrypoint (sets QtWebEngine env + calls main()).
+    ["fbai/launcher.py"],
     pathex=[str(APP_ROOT)],
     binaries=binaries,
     datas=datas,
