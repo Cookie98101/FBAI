@@ -1,0 +1,9 @@
+{
+  "prompt": "创建一个关于旅行的短视频，包含风景、人物活动等元素，语气轻松愉快。",
+  "api_key": "",
+  "duration": "30",
+  "style": "旅行",
+  "tts_engine": "阿里云百炼",
+  "voice": "Cherry",
+  "last_modified": "2025-10-11 07:40:52"
+}

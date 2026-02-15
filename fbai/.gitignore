@@ -1,0 +1,150 @@
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.pyc
+
+# ==================== 数据库文件 ====================
+automation.db
+automation.db-journal
+*.db
+*.db-journal
+data/
+
+# ==================== 测试文件 ====================
+test_*.py
+*_test.py
+测试*.py
+check_*.py
+debug_*.py
+调试*.py
+验证*.py
+诊断*.py
+
+# ==================== 临时和备份文件 ====================
+*.tmp
+*.bak
+temp/
+tmp/
+备份*/
+*backup*
+* copy.py
+* copy 2.py
+
+# ==================== 文档（排除大部分，只保留核心）====================
+*说明.md
+*总结.md
+*报告.md
+*指南.md
+*修复*.md
+*优化*.md
+*完成*.md
+*问题*.md
+*诊断*.md
+*参考*.md
+
+# ==================== 配置文件（敏感信息）====================
+automation/scripts/脚本配置/账号.txt
+automation/scripts/脚本配置/vpn.txt
+automation/scripts/脚本配置/vpn_index.json
+重要文件/
+
+# ==================== 日志文件 ====================
+*.log
+*.txt
+!requirements.txt
+!README-必读.txt
+
+# ==================== IDE 和编辑器 ====================
+.vscode/
+.idea/
+.kiro/
+*.swp
+*.swo
+*~
+.cursor/
+.cursorrules
+
+# ==================== 操作系统 ====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==================== 打包相关 ====================
+dist/
+build/
+*.spec
+*.manifest
+打包*/
+*打包*.py
+路径修复打包.py
+
+# ==================== 脚本和批处理 ====================
+*.bat
+*.ps1
+!启动程序.bat
+!启动认证后台.bat
+
+# ==================== 其他项目 ====================
+../其他/
+../fb小组规则研发/
+../【材料归档】/
+../柳芯监控系统/
+../系统升级/
+../设置/
+../cursor-mcp-V2.0/
+../../*.rar
+../../*.zip
+
+# ==================== 无关目录 ====================
+账号风控排查系统/
+账号风控排查系统.zip
+ip_proxy_manager_v3_fixed/
+video_tools/
+/update_server/
+/docs/
+/scripts/
+
+# ==================== 清理和修复脚本 ====================
+清理*.py
+清理*.bat
+修复*.py
+修复*.bat
+强制*.py
+强制*.bat
+彻底*.py
+手动*.bat
+底层*.bat
+检查*.py
+检查*.bat
+查看*.py
+快速测试*.py
+快速启动*.py
+
+# ==================== 临时文件 ====================
+example_automation.py
+facebook_dashboard copy*.py
+facebook_dashboard_duplicate_fix.py
+facebook_dashboard_integration_patch.py
+homepage_browser_new.py
+launcher_debug.py
+launcher_safe.py
+UI卡顿*.py
+database_补充接口.py

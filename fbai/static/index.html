@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook数据展示</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #58a6ff;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            color: #58a6ff;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #30363d;
+        }
+        th {
+            background-color: #0d6efd;
+            color: white;
+        }
+        tr:hover {
+            background-color: #1f2a38;
+        }
+        .chart-container {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background-color: #0b5ed7;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .error {
+            color: #f85149;
+            text-align: center;
+            padding: 20px;
+        }
+        .success {
+            color: #3fb950;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* 分页控件样式 */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px 0;
+            border-top: 1px solid #e1e4e8;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .pagination button {
+            padding: 6px 12px;
+            background-color: #f6f8fa;
+            color: #24292f;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background-color: #eaeef2;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination button.active {
+            background-color: #0969da;
+            color: white;
+            border-color: #0969da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Facebook数据展示程序</h1>
+            <p>实时查看Facebook相关数据</p>
+        </header>
+
+        <div class="controls">
+            <button class="btn" onclick="fetchCurrentData()">获取当前数据</button>
+            <button class="btn" onclick="fetchHistoryData()">获取历史数据</button>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <h2>数据图表</h2>
+                <div id="chart-container" class="chart-container">
+                    <p>点击上方按钮获取数据以显示图表</p>
+                </div>
+            </div>
+            <div class="card">
+                <h2>详细数据</h2>
+                <div id="table-container">
+                    <p>点击上方按钮获取数据以显示表格</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="status-message"></div>
+    </div>
+
+    <script>
+        // 显示状态消息
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.className = type;
+            statusDiv.innerHTML = message;
+        }
+
+        // 显示加载状态
+        function showLoading() {
+            showStatus('<div class="loading">正在加载数据...</div>', 'loading');
+        }
+
+        // 显示错误消息
+        function showError(message) {
+            showStatus(`<div class="error">错误: ${message}</div>`, 'error');
+        }
+
+        // 显示成功消息
+        function showSuccess(message) {
+            showStatus(`<div class="success">${message}</div>`, 'success');
+        }
+
+        // 获取当前数据
+        function fetchCurrentData() {
+            showLoading();
+            fetch('http://localhost:8805/get_current_data')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        renderTable(data.data);
+                        renderChart(data.data);
+                        showSuccess(data.message);
+                    } else {
+                        showError(data.message);
+                    }
+                })
+                .catch(error => {
+                    showError(`获取数据失败: ${error.message}`);
+                    console.error('Error:', error);
+                });
+        }
+
+        // 当前页码
+        let currentPage = 1;
+        const pageSize = 10;
+
+        // 获取历史数据
+        function fetchHistoryData(page = 1) {
+            showLoading();
+            fetch(`http://localhost:8805/get_data_history?page=${page}&page_size=${pageSize}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        renderTable(data.data);
+                        renderChart(data.data);
+                        renderPagination(data.pagination);
+                        showSuccess(data.message);
+                    } else {
+                        showError(data.message);
+                    }
+                })
+                .catch(error => {
+                    showError(`获取数据失败: ${error.message}`);
+                    console.error('Error:', error);
+                });
+        }
+
+        // 渲染分页控件
+        function renderPagination(pagination) {
+            if (!pagination) return;
+
+            const { current_page, total_pages, total } = pagination;
+            currentPage = current_page;
+
+            let paginationHTML = `
+                <div class="pagination">
+                    <span>共 ${total} 条记录，第 ${current_page} 页 / 共 ${total_pages} 页</span>
+                    <div class="pagination-controls">
+            `;
+
+            // 上一页按钮
+            if (current_page > 1) {
+                paginationHTML += `<button onclick="fetchHistoryData(${current_page - 1})">上一页</button>`;
+            } else {
+                paginationHTML += `<button disabled>上一页</button>`;
+            }
+
+            // 页码按钮（显示当前页前后几页）
+            const startPage = Math.max(1, current_page - 2);
+            const endPage = Math.min(total_pages, current_page + 2);
+
+            for (let i = startPage; i <= endPage; i++) {
+                if (i === current_page) {
+                    paginationHTML += `<button class="active" disabled>${i}</button>`;
+                } else {
+                    paginationHTML += `<button onclick="fetchHistoryData(${i})">${i}</button>`;
+                }
+            }
+
+            // 下一页按钮
+            if (current_page < total_pages) {
+                paginationHTML += `<button onclick="fetchHistoryData(${current_page + 1})">下一页</button>`;
+            } else {
+                paginationHTML += `<button disabled>下一页</button>`;
+            }
+
+            paginationHTML += `
+                    </div>
+                </div>
+            `;
+
+            // 将分页控件添加到表格容器下方
+            const tableContainer = document.getElementById('table-container');
+            tableContainer.innerHTML += paginationHTML;
+        }
+
+        // 渲染表格
+        function renderTable(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('table-container').innerHTML = '<p>没有数据可显示</p>';
+                return;
+            }
+
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>点赞数</th>
+                            <th>评论数</th>
+                            <th>分享数</th>
+                            <th>好友数</th>
+                            <th>动态数</th>
+                            <th>账号数</th>
+                            <th>小组数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(item => {
+                tableHTML += `
+                    <tr>
+                        <td>${item.date}</td>
+                        <td>${item.likes}</td>
+                        <td>${item.comments}</td>
+                        <td>${item.shares}</td>
+                        <td>${item.friends}</td>
+                        <td>${item.posts}</td>
+                        <td>${item.accounts}</td>
+                        <td>${item.groups}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('table-container').innerHTML = tableHTML;
+        }
+
+        // 渲染图表（简化版本，只显示点赞数）
+        function renderChart(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('chart-container').innerHTML = '<p>没有数据可显示</p>';
+                return;
+            }
+
+            // 创建简单的柱状图
+            let chartHTML = `
+                <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+                    <h3>点赞数趋势</h3>
+                    <div style="display: flex; align-items: flex-end; height: 200px; width: 90%; border-left: 2px solid #58a6ff; border-bottom: 2px solid #58a6ff; padding: 10px;">
+            `;
+
+            // 找到最大值用于缩放
+            const maxLikes = Math.max(...data.map(item => item.likes));
+
+            data.forEach(item => {
+                const height = (item.likes / maxLikes) * 180; // 最大高度180px
+                chartHTML += `
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; margin: 0 5px;">
+                        <div style="width: 30px; height: ${height}px; background-color: #0d6efd; margin-bottom: 5px;"></div>
+                        <div style="font-size: 10px; transform: rotate(-45deg);">${item.date.substring(5)}</div>
+                    </div>
+                `;
+            });
+
+            chartHTML += `
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('chart-container').innerHTML = chartHTML;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+{
+  "version": "1.0.1.0",
+  "update_time": "2026-02-11 20:21:38",
+  "description": "自动更新",
+  "files": {
+    "bitbrowser_api.py": {
+      "hash": "c8204e72231539cdbe87c5ab6e1ad25b",
+      "size": 5380,
+      "url": "http://43.142.176.53:8805/update_server/files/bitbrowser_api.py",
+      "description": "bitbrowser_api",
+      "mtime": 1770811678
+    },
+    "main.py": {
+      "hash": "43886835383c83f04c0575f62187957d",
+      "size": 73874,
+      "url": "http://43.142.176.53:8805/update_server/files/main.py",
+      "description": "main",
+      "mtime": 1770811678
+    },
+    "互动协调器.py": {
+      "hash": "29e7de3b988b4fab0ca968add5519eb2",
+      "size": 14321,
+      "url": "http://43.142.176.53:8805/update_server/files/%E4%BA%92%E5%8A%A8%E5%8D%8F%E8%B0%83%E5%99%A8.py",
+      "description": "互动协调器",
+      "mtime": 1770811682
+    },
+    "测试热更新连接.py": {
+      "hash": "651a105ddaf53d9bae44bea764c0e936",
+      "size": 2681,
+      "url": "http://43.142.176.53:8805/update_server/files/%E6%B5%8B%E8%AF%95%E7%83%AD%E6%9B%B4%E6%96%B0%E8%BF%9E%E6%8E%A5.py",
+      "description": "测试热更新连接",
+      "mtime": 1770811683
+    },
+    "热更新守护进程.py": {
+      "hash": "12829bfe67448894d4cf39410784209b",
+      "size": 18348,
+      "url": "http://43.142.176.53:8805/update_server/files/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B.py",
+      "description": "热更新守护进程",
+      "mtime": 1770811683
+    },
+    "自动发帖管理器.py": {
+      "hash": "874030d598e8876bf54c7685ebd4c9cc",
+      "size": 23137,
+      "url": "http://43.142.176.53:8805/update_server/files/%E8%87%AA%E5%8A%A8%E5%8F%91%E5%B8%96%E7%AE%A1%E7%90%86%E5%99%A8.py",
+      "description": "自动发帖管理器",
+      "mtime": 1770811683
+    },
+    "远程账号管理.py": {
+      "hash": "4149e4b3d3a8fdf81ff96ff941456319",
+      "size": 8297,
+      "url": "http://43.142.176.53:8805/update_server/files/%E8%BF%9C%E7%A8%8B%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86.py",
+      "description": "远程账号管理",
+      "mtime": 1770811683
+    },
+    "配置远程账号.py": {
+      "hash": "04e4445d2d223d80a81acb7e8e542a41",
+      "size": 2834,
+      "url": "http://43.142.176.53:8805/update_server/files/%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E8%B4%A6%E5%8F%B7.py",
+      "description": "配置远程账号",
+      "mtime": 1770811683
+    },
+    "bitbrowser_api.pyc": {
+      "hash": "f15a982d19b653c3c2e9c3703c5e22fe",
+      "size": 6845,
+      "url": "http://43.142.176.53:8805/update_server/files/bitbrowser_api.pyc",
+      "description": "bitbrowser_api",
+      "mtime": 1770811678
+    },
+    "main.pyc": {
+      "hash": "f6f1773f3e64ed5b6ec66f610dbbd95e",
+      "size": 99150,
+      "url": "http://43.142.176.53:8805/update_server/files/main.pyc",
+      "description": "main",
+      "mtime": 1770811678
+    },
+    "manage_accounts.pyc": {
+      "hash": "15748de51f374f5e965b439f321af2cf",
+      "size": 9329,
+      "url": "http://43.142.176.53:8805/update_server/files/manage_accounts.pyc",
+      "description": "manage_accounts",
+      "mtime": 1770811678
+    },
+    "migrate_to_db.pyc": {
+      "hash": "a2b27c35d9a15bdb85305f826ec65a2d",
+      "size": 2885,
+      "url": "http://43.142.176.53:8805/update_server/files/migrate_to_db.pyc",
+      "description": "migrate_to_db",
+      "mtime": 1770811678
+    },
+    "test_account_days.pyc": {
+      "hash": "7604e2aedaa391777d59946c4c984180",
+      "size": 5983,
+      "url": "http://43.142.176.53:8805/update_server/files/test_account_days.pyc",
+      "description": "test_account_days",
+      "mtime": 1770811682
+    },
+    "test_database.pyc": {
+      "hash": "16607e0c71e79327e49179c209ec9501",
+      "size": 4063,
+      "url": "http://43.142.176.53:8805/update_server/files/test_database.pyc",
+      "description": "test_database",
+      "mtime": 1770811682
+    },
+    "test_group_dedup.pyc": {
+      "hash": "33d0e0a772211d02e20cdebd91bc15b6",
+      "size": 7180,
+      "url": "http://43.142.176.53:8805/update_server/files/test_group_dedup.pyc",
+      "description": "test_group_dedup",
+      "mtime": 1770811682
+    },
+    "互动协调器.pyc": {
+      "hash": "b94b3a64bde8f994a1925bfcbb536067",
+      "size": 14569,
+      "url": "http://43.142.176.53:8805/update_server/files/%E4%BA%92%E5%8A%A8%E5%8D%8F%E8%B0%83%E5%99%A8.pyc",
+      "description": "互动协调器",
+      "mtime": 1770811682
+    },
+    "加入小组.pyc": {
+      "hash": "d01a96cc7569c9ab36bc8a66878b4e26",
+      "size": 25732,
+      "url": "http://43.142.176.53:8805/update_server/files/%E5%8A%A0%E5%85%A5%E5%B0%8F%E7%BB%84.pyc",
+      "description": "加入小组",
+      "mtime": 1770811683
+    },
+    "测试热更新连接.pyc": {
+      "hash": "57761178d6062e15437390ab809104b5",
+      "size": 4071,
+      "url": "http://43.142.176.53:8805/update_server/files/%E6%B5%8B%E8%AF%95%E7%83%AD%E6%9B%B4%E6%96%B0%E8%BF%9E%E6%8E%A5.pyc",
+      "description": "测试热更新连接",
+      "mtime": 1770811683
+    },
+    "热更新守护进程.pyc": {
+      "hash": "a2936591ff071e3038bf3c60851d286d",
+      "size": 23557,
+      "url": "http://43.142.176.53:8805/update_server/files/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B.pyc",
+      "description": "热更新守护进程",
+      "mtime": 1770811683
+    },
+    "自动发帖管理器.pyc": {
+      "hash": "f04f4ca8bab26d5ff9e8d6734b6cc008",
+      "size": 24752,
+      "url": "http://43.142.176.53:8805/update_server/files/%E8%87%AA%E5%8A%A8%E5%8F%91%E5%B8%96%E7%AE%A1%E7%90%86%E5%99%A8.pyc",
+      "description": "自动发帖管理器",
+      "mtime": 1770811683
+    },
+    "远程账号管理.pyc": {
+      "hash": "7dea90c28aef91965ae06fe8085a10da",
+      "size": 9742,
+      "url": "http://43.142.176.53:8805/update_server/files/%E8%BF%9C%E7%A8%8B%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86.pyc",
+      "description": "远程账号管理",
+      "mtime": 1770811683
+    },
+    "配置远程账号.pyc": {
+      "hash": "47d90fed07d6309262eeb978c22c11fd",
+      "size": 4092,
+      "url": "http://43.142.176.53:8805/update_server/files/%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E8%B4%A6%E5%8F%B7.pyc",
+      "description": "配置远程账号",
+      "mtime": 1770811683
+    },
+    "tasks/主页发帖.py": {
+      "hash": "0a5130f74c575a36283a9794e6020ee5",
+      "size": 84838,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E4%B8%BB%E9%A1%B5%E5%8F%91%E5%B8%96.py",
+      "description": "主页发帖",
+      "mtime": 1770811678
+    },
+    "tasks/分享动态.py": {
+      "hash": "338fcbaf3779931f718962dacb372c7d",
+      "size": 35505,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%88%86%E4%BA%AB%E5%8A%A8%E6%80%81.py",
+      "description": "分享动态",
+      "mtime": 1770811679
+    },
+    "tasks/到首页.py": {
+      "hash": "ec0e4cbb17a3bd219ce279b766755c7f",
+      "size": 35128,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%88%B0%E9%A6%96%E9%A1%B5.py",
+      "description": "到首页",
+      "mtime": 1770811679
+    },
+    "tasks/加入小组.py": {
+      "hash": "b2cd12e15abac20f94826d5eaed5e723",
+      "size": 25297,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%8A%A0%E5%85%A5%E5%B0%8F%E7%BB%84.py",
+      "description": "加入小组",
+      "mtime": 1770811679
+    },
+    "tasks/加好友.py": {
+      "hash": "a8ec1aec66d1d583b7846902d8c0d86f",
+      "size": 24965,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%8A%A0%E5%A5%BD%E5%8F%8B.py",
+      "description": "加好友",
+      "mtime": 1770811679
+    },
+    "tasks/去重管理.py": {
+      "hash": "f0a0e9845d5f27b26521c6d7fead9335",
+      "size": 12845,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%8E%BB%E9%87%8D%E7%AE%A1%E7%90%86.py",
+      "description": "去重管理",
+      "mtime": 1770811679
+    },
+    "tasks/小组互动加权.py": {
+      "hash": "34dcadce66002aa1b7c37b22b31d224b",
+      "size": 50561,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%B0%8F%E7%BB%84%E4%BA%92%E5%8A%A8%E5%8A%A0%E6%9D%83.py",
+      "description": "小组互动加权",
+      "mtime": 1770811679
+    },
+    "tasks/小组转发.py": {
+      "hash": "15c103e23cfdc200146f7aa910ebb35a",
+      "size": 43342,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%B0%8F%E7%BB%84%E8%BD%AC%E5%8F%91.py",
+      "description": "小组转发",
+      "mtime": 1770811679
+    },
+    "tasks/帖子互动.py": {
+      "hash": "805e5428208417dfdfda39ea0689b274",
+      "size": 34413,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%B8%96%E5%AD%90%E4%BA%92%E5%8A%A8.py",
+      "description": "帖子互动",
+      "mtime": 1770811680
+    },
+    "tasks/登录.py": {
+      "hash": "fa1af7180b041595f32ce2e04763e2dd",
+      "size": 119438,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E7%99%BB%E5%BD%95.py",
+      "description": "登录",
+      "mtime": 1770811680
+    },
+    "tasks/自动化工具.py": {
+      "hash": "e9e47681b1e403ccc1d0146d21575123",
+      "size": 32226,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7.py",
+      "description": "自动化工具",
+      "mtime": 1770811680
+    },
+    "tasks/视频功能.py": {
+      "hash": "9290047b1b9be71971d85641f560a1f0",
+      "size": 34755,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%A7%86%E9%A2%91%E5%8A%9F%E8%83%BD.py",
+      "description": "视频功能",
+      "mtime": 1770811680
+    },
+    "tasks/设置头像.py": {
+      "hash": "be8e310e14b15fd6d35ddedeab9de4fd",
+      "size": 7852,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%AE%BE%E7%BD%AE%E5%A4%B4%E5%83%8F.py",
+      "description": "设置头像",
+      "mtime": 1770811681
+    },
+    "tasks/辅助_进入公共主页.py": {
+      "hash": "e52d7ce4ac52508c4a25f592fc30b925",
+      "size": 40820,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%BE%85%E5%8A%A9_%E8%BF%9B%E5%85%A5%E5%85%AC%E5%85%B1%E4%B8%BB%E9%A1%B5.py",
+      "description": "辅助_进入公共主页",
+      "mtime": 1770811681
+    },
+    "tasks/通知功能.py": {
+      "hash": "3b55e26fc9ccefd6e8dad0961cc0ec7f",
+      "size": 26806,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%80%9A%E7%9F%A5%E5%8A%9F%E8%83%BD.py",
+      "description": "通知功能",
+      "mtime": 1770811681
+    },
+    "tasks/采集小组链接.py": {
+      "hash": "faeeb8b8de0a491f339635c1293a328b",
+      "size": 11814,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%87%87%E9%9B%86%E5%B0%8F%E7%BB%84%E9%93%BE%E6%8E%A5.py",
+      "description": "采集小组链接",
+      "mtime": 1770811681
+    },
+    "tasks/阅读.py": {
+      "hash": "e8c9b09378526f711ed5a572de574e26",
+      "size": 46730,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB.py",
+      "description": "阅读",
+      "mtime": 1770811681
+    },
+    "tasks/随机点击首页.py": {
+      "hash": "4963557dd6395682ef457ecda91d57aa",
+      "size": 26402,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%87%BB%E9%A6%96%E9%A1%B5.py",
+      "description": "随机点击首页",
+      "mtime": 1770811682
+    },
+    "tasks/demo.pyc": {
+      "hash": "6883c148c1c01abd284761e8d2c0d684",
+      "size": 9552,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/demo.pyc",
+      "description": "demo",
+      "mtime": 1770811678
+    },
+    "tasks/主页发帖.pyc": {
+      "hash": "fc2c294539a76e9e726a060ac40f536b",
+      "size": 77038,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E4%B8%BB%E9%A1%B5%E5%8F%91%E5%B8%96.pyc",
+      "description": "主页发帖",
+      "mtime": 1770811678
+    },
+    "tasks/分享动态.pyc": {
+      "hash": "6c0c710e62d94ae64da380f2ad078418",
+      "size": 31584,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%88%86%E4%BA%AB%E5%8A%A8%E6%80%81.pyc",
+      "description": "分享动态",
+      "mtime": 1770811679
+    },
+    "tasks/到首页.pyc": {
+      "hash": "e44fe926621f2f623b009ea9225878fd",
+      "size": 42169,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%88%B0%E9%A6%96%E9%A1%B5.pyc",
+      "description": "到首页",
+      "mtime": 1770811679
+    },
+    "tasks/加入小组.pyc": {
+      "hash": "bc339cbd2e8c7aa7a51b644112023187",
+      "size": 65422,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%8A%A0%E5%85%A5%E5%B0%8F%E7%BB%84.pyc",
+      "description": "加入小组",
+      "mtime": 1770811679
+    },
+    "tasks/加好友.pyc": {
+      "hash": "850013e9a9aa1190a267310c678424da",
+      "size": 45399,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%8A%A0%E5%A5%BD%E5%8F%8B.pyc",
+      "description": "加好友",
+      "mtime": 1770811679
+    },
+    "tasks/去重管理.pyc": {
+      "hash": "5c7ebb99d972ec0f5d6cfe31040fb432",
+      "size": 13801,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%8E%BB%E9%87%8D%E7%AE%A1%E7%90%86.pyc",
+      "description": "去重管理",
+      "mtime": 1770811679
+    },
+    "tasks/小组互动加权.pyc": {
+      "hash": "675a15d4420795c0b5d8af1ce98b50f9",
+      "size": 47295,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%B0%8F%E7%BB%84%E4%BA%92%E5%8A%A8%E5%8A%A0%E6%9D%83.pyc",
+      "description": "小组互动加权",
+      "mtime": 1770811679
+    },
+    "tasks/小组转发.pyc": {
+      "hash": "921c346940d65b7fb19abe04e05704d6",
+      "size": 56615,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%B0%8F%E7%BB%84%E8%BD%AC%E5%8F%91.pyc",
+      "description": "小组转发",
+      "mtime": 1770811680
+    },
+    "tasks/帖子互动.pyc": {
+      "hash": "56fea78a5fed211cdca6c4d243cab6ce",
+      "size": 53736,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E5%B8%96%E5%AD%90%E4%BA%92%E5%8A%A8.pyc",
+      "description": "帖子互动",
+      "mtime": 1770811680
+    },
+    "tasks/测试无用.pyc": {
+      "hash": "64238c25b6c31f7e4dac383bf683ff34",
+      "size": 143,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E6%B5%8B%E8%AF%95%E6%97%A0%E7%94%A8.pyc",
+      "description": "测试无用",
+      "mtime": 1770811680
+    },
+    "tasks/登录.pyc": {
+      "hash": "e3d05decc1f5722025791341029f9c72",
+      "size": 121769,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E7%99%BB%E5%BD%95.pyc",
+      "description": "登录",
+      "mtime": 1770811680
+    },
+    "tasks/自动化工具.pyc": {
+      "hash": "1738ef1b28e4ac681277e5f55c9483c0",
+      "size": 54214,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7.pyc",
+      "description": "自动化工具",
+      "mtime": 1770811680
+    },
+    "tasks/视频功能.pyc": {
+      "hash": "da34c8d40ddfedca9d65a1c49729f688",
+      "size": 35211,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%A7%86%E9%A2%91%E5%8A%9F%E8%83%BD.pyc",
+      "description": "视频功能",
+      "mtime": 1770811681
+    },
+    "tasks/设置头像.pyc": {
+      "hash": "608123ba5ee02a17a7f6a0f6021cd80a",
+      "size": 25929,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%AE%BE%E7%BD%AE%E5%A4%B4%E5%83%8F.pyc",
+      "description": "设置头像",
+      "mtime": 1770811681
+    },
+    "tasks/评论功能_新版.pyc": {
+      "hash": "6ba542db54e23298d3447942951296b4",
+      "size": 7648,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD_%E6%96%B0%E7%89%88.pyc",
+      "description": "评论功能_新版",
+      "mtime": 1770811681
+    },
+    "tasks/辅助_进入公共主页.pyc": {
+      "hash": "c7c34559f3e6d0d89fa7d6bd4e0e5d41",
+      "size": 25333,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E8%BE%85%E5%8A%A9_%E8%BF%9B%E5%85%A5%E5%85%AC%E5%85%B1%E4%B8%BB%E9%A1%B5.pyc",
+      "description": "辅助_进入公共主页",
+      "mtime": 1770811681
+    },
+    "tasks/通知功能.pyc": {
+      "hash": "eaab139ae05c8e687f8f9072bb2954ed",
+      "size": 26374,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%80%9A%E7%9F%A5%E5%8A%9F%E8%83%BD.pyc",
+      "description": "通知功能",
+      "mtime": 1770811681
+    },
+    "tasks/采集小组链接.pyc": {
+      "hash": "3b9a4002e6f3d4bbc1c7724b75b8464e",
+      "size": 16405,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%87%87%E9%9B%86%E5%B0%8F%E7%BB%84%E9%93%BE%E6%8E%A5.pyc",
+      "description": "采集小组链接",
+      "mtime": 1770811681
+    },
+    "tasks/阅读.pyc": {
+      "hash": "b23ab408f36cd99bf3ec5a9ca1fb6abf",
+      "size": 76642,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB.pyc",
+      "description": "阅读",
+      "mtime": 1770811681
+    },
+    "tasks/阅读_内容管理.pyc": {
+      "hash": "3409a359db9308328614bcd7a304b35d",
+      "size": 10165,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB_%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86.pyc",
+      "description": "阅读_内容管理",
+      "mtime": 1770811681
+    },
+    "tasks/阅读_异常检测.pyc": {
+      "hash": "5a8506869c44927f66c763b55d3869b4",
+      "size": 16248,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB_%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B.pyc",
+      "description": "阅读_异常检测",
+      "mtime": 1770811682
+    },
+    "tasks/阅读_查看评论.pyc": {
+      "hash": "d7d3754902f232cee95de0404c5c40f4",
+      "size": 28893,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB_%E6%9F%A5%E7%9C%8B%E8%AF%84%E8%AE%BA.pyc",
+      "description": "阅读_查看评论",
+      "mtime": 1770811682
+    },
+    "tasks/阅读_用户互动.pyc": {
+      "hash": "e9d6cb48745079ecdb2d107a4310f270",
+      "size": 76568,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB_%E7%94%A8%E6%88%B7%E4%BA%92%E5%8A%A8.pyc",
+      "description": "阅读_用户互动",
+      "mtime": 1770811682
+    },
+    "tasks/阅读_评论区挖掘.pyc": {
+      "hash": "c462ca542cad0802d4c869dc0da6c9b7",
+      "size": 43960,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB_%E8%AF%84%E8%AE%BA%E5%8C%BA%E6%8C%96%E6%8E%98.pyc",
+      "description": "阅读_评论区挖掘",
+      "mtime": 1770811682
+    },
+    "tasks/阅读_阶段配置.pyc": {
+      "hash": "d9aefd9a34d8713701671ef3279e3bbb",
+      "size": 13257,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%98%85%E8%AF%BB_%E9%98%B6%E6%AE%B5%E9%85%8D%E7%BD%AE.pyc",
+      "description": "阅读_阶段配置",
+      "mtime": 1770811682
+    },
+    "tasks/随机点击首页.pyc": {
+      "hash": "8a5ecba1115ce4ed709d5ee3dfe1dc65",
+      "size": 24479,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%87%BB%E9%A6%96%E9%A1%B5.pyc",
+      "description": "随机点击首页",
+      "mtime": 1770811682
+    },
+    "tasks/黑名单管理工具.pyc": {
+      "hash": "26fbe678153206c8f7f9d5b2c5ff93d4",
+      "size": 16537,
+      "url": "http://43.142.176.53:8805/update_server/files/tasks/%E9%BB%91%E5%90%8D%E5%8D%95%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.pyc",
+      "description": "黑名单管理工具",
+      "mtime": 1770811682
+    }
+  }
+}

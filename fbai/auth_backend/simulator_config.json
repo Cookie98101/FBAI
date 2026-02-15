@@ -1,0 +1,12 @@
+{
+    "monitor_path": "D:\\FacebookSpider\\FB推广系统\\账号管理",
+    "memu_path": "D:\\FacebookSpider\\Microvirt\\MEmu\\memuc.exe",
+    "check_interval": 10,
+    "restart_threshold": 300,
+    "app_package": "com.xxxx.packagename/com.xxxx.MainActivity",
+    "sendkey_value": "volumedown",
+    "username": "脚本测试4",
+    "video_save_path": "D:\\FacebookSpider\\FB推广系统\\共享文件\\注册账号\\视频",
+    "auto_generate_video": false,
+    "min_video_count": 5
+}

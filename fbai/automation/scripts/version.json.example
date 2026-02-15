@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "update_time": "2026-01-06 12:00:00",
+  "description": "初始版本",
+  "files": {
+    "main.py": {
+      "hash": "abc123...",
+      "size": 45678,
+      "url": "https://your-server.com/automation/main.py",
+      "description": "主控制器"
+    },
+    "tasks/阅读.py": {
+      "hash": "def456...",
+      "size": 12345,
+      "url": "https://your-server.com/automation/tasks/阅读.py",
+      "description": "阅读任务"
+    },
+    "tasks/登录.py": {
+      "hash": "ghi789...",
+      "size": 23456,
+      "url": "https://your-server.com/automation/tasks/登录.py",
+      "description": "登录任务"
+    }
+  }
+}

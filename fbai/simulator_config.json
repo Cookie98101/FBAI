@@ -1,0 +1,13 @@
+{
+  "app_package": "mark.via/.Shell",
+  "sendkey_value": "volumedown",
+  "_comment": "sendkey_value 可选值: back, home, menu, volumeup, volumedown",
+  "username": "ceshi",
+  "monitor_path": "D:\\FacebookSpider\\FB推广系统\\账号管理",
+  "memu_path": "D:\\FacebookSpider\\Microvirt\\MEmu\\memuc.exe",
+  "check_interval": 9,
+  "restart_threshold": 200,
+  "video_save_path": "D:\\FacebookSpider\\FB推广系统\\共享文件\\注册账号\\视频",
+  "auto_generate_video": true,
+  "min_video_count": 5
+}

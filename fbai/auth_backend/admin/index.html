@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook数据展示程序 - 后台管理</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* 添加动态背景效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(252, 70, 107, 0.3), transparent 50%);
+            animation: bgAnimation 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes bgAnimation {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10%);
+            background-size: 50px 50px;
+            animation: headerBg 20s linear infinite;
+        }
+        
+        @keyframes headerBg {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 i {
+            margin-right: 15px;
+            color: #3498db;
+        }
+        
+        .header p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: linear-gradient(to right, #34495e 0%, #2c3e50 100%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            padding: 18px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-btn i {
+            margin-right: 8px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+            color: white;
+            border-bottom-color: #3498db;
+        }
+        
+        .nav-btn.active {
+            background: rgba(52, 152, 219, 0.3);
+            color: white;
+            border-bottom-color: #3498db;
+            font-weight: 600;
+        }
+        
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #3498db;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-btn.active::after {
+            width: 80%;
+        }
+        
+        .content {
+            padding: 30px;
+            min-height: 500px;
+            background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h2 i {
+            margin-right: 15px;
+            color: #3498db;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 14px;
+        }
+        
+        .form-group label i {
+            margin-right: 8px;
+            color: #3498db;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .form-group input:hover, .form-group select:hover {
+            border-color: #3498db;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 6px 12px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-danger:hover {
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
+        }
+        
+        /* 小按钮样式 - 用于表格操作 */
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            margin-right: 5px;
+            margin-bottom: 3px;
+            display: inline-block;
+            width: 80px;  /* 固定宽度，确保所有按钮一样大 */
+            text-align: center;
+        }
+        
+        .btn-sm i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        
+        .btn-sm:hover {
+            transform: translateY(-1px);
+        }
+        
+        /* 按钮组容器 */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        /* 统一使用蓝色主题 */
+        .btn-primary,
+        .btn-success,
+        .btn-warning,
+        .btn-danger {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-primary:hover,
+        .btn-success:hover,
+        .btn-warning:hover,
+        .btn-danger:hover {
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+        }
+        
+        /* 危险操作按钮保持红色 */
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 0 2px 4px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-danger:hover {
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.4);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+        
+        .table th, .table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .table th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .table th:first-child {
+            border-top-left-radius: 12px;
+        }
+        
+        .table th:last-child {
+            border-top-right-radius: 12px;
+        }
+        
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .table tbody tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.01);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .status-active {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .status-expired {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .message {
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            display: none;
+            animation: slideInMessage 0.4s ease-out;
+            font-weight: 500;
+        }
+        
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .message i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .message.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-left: 4px solid #28a745;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+        }
+        
+        .message.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .stat-card i {
+            font-size: 2.5em;
+            color: #3498db;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* 登录界面样式 */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .login-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .login-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        .login-form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #2980b9;
+        }
+        
+        .login-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            float: right;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .logout-btn i {
+            margin-right: 8px;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.5);
+        }
+        
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>🔒 管理员登录</h2>
+            <div id="loginError" class="login-error"></div>
+            <form id="loginForm">
+                <div class="login-form-group">
+                    <label>管理员账号:</label>
+                    <input type="text" id="adminUsername" required autocomplete="username">
+                </div>
+                <div class="login-form-group">
+                    <label>管理员密码:</label>
+                    <input type="password" id="adminPassword" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">登录</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fab fa-facebook"></i>Facebook数据展示程序 - 后台管理</h1>
+            <p>🔒 用户授权管理系统</p>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>退出登录</button>
+        </div>
+        
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i>仪表板</button>
+            <button class="nav-btn" onclick="showSection('users')"><i class="fas fa-users"></i>用户管理</button>
+            <button class="nav-btn" onclick="showSection('sessions')"><i class="fas fa-signal"></i>在线用户</button>
+            <button class="nav-btn" onclick="showSection('create')"><i class="fas fa-user-plus"></i>创建用户</button>
+            <button class="nav-btn" onclick="showSection('notification')"><i class="fas fa-bell"></i>系统通知</button>
+        </div>
+        
+        <div class="content">
+            <div id="message" class="message"></div>
+            
+            <!-- 仪表板 -->
+            <div id="dashboard" class="section active">
+                <h2><i class="fas fa-chart-line"></i>系统概览</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">总用户数</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-user-check"></i>
+                        <div class="stat-number" id="activeUsers">0</div>
+                        <div class="stat-label">活跃用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-wifi"></i>
+                        <div class="stat-number" id="onlineUsers">0</div>
+                        <div class="stat-label">在线用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-user-clock"></i>
+                        <div class="stat-number" id="expiredUsers">0</div>
+                        <div class="stat-label">过期用户</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户管理 -->
+            <div id="users" class="section">
+                <h2><i class="fas fa-user-cog"></i>用户管理</h2>
+                <button class="btn" onclick="loadUsers()"><i class="fas fa-sync-alt"></i>刷新列表</button>
+                <table class="table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>用户名</th>
+                            <th>密码</th>
+                            <th>状态</th>
+                            <th>到期时间</th>
+                            <th>窗口数量</th>
+                            <th>浏览器数量</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <!-- 在线用户 -->
+            <div id="sessions" class="section">
+                <h2><i class="fas fa-heartbeat"></i>在线用户</h2>
+                <button class="btn" onclick="loadSessions()"><i class="fas fa-sync-alt"></i>刷新列表</button>
+                <table class="table" id="sessionsTable">
+                    <thead>
+                        <tr>
+                            <th>用户ID</th>
+                            <th>账号</th>
+                            <th>设备ID</th>
+                            <th>登录时间</th>
+                            <th>最后心跳</th>
+                            <th>使用时长(分钟)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <!-- 创建用户 -->
+            <div id="create" class="section">
+                <h2><i class="fas fa-user-plus"></i>创建新用户</h2>
+                <form id="createUserForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i>用户名:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i>密码:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i>有效期限 (天):</label>
+                        <input type="number" id="expireDays" value="30" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-window-restore"></i>窗口数量（并发数）:</label>
+                        <input type="number" id="maxWindows" value="1" min="1">
+                        <small style="color: #8b949e; display: block; margin-top: 5px;">
+                            💡 主程序同时操作的浏览器窗口数量（多线程并发数）
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-browser"></i>浏览器数量（总账号数）:</label>
+                        <input type="number" id="maxSimulators" value="10" min="1">
+                        <small style="color: #8b949e; display: block; margin-top: 5px;">
+                            💡 用户最多可以拥有的浏览器账号总数
+                        </small>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i>创建用户</button>
+                </form>
+            </div>
+            
+            <!-- 系统通知 -->
+            <div id="notification" class="section">
+                <h2><i class="fas fa-bell"></i>系统通知设置</h2>
+                <p style="color: #7f8c8d; margin-bottom: 20px;">
+                    <i class="fas fa-info-circle"></i> 
+                    设置客户端UI启动时显示的通知消息，将显示在程序底部状态栏
+                </p>
+                <form id="notificationForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-comment-dots"></i>通知内容:</label>
+                        <textarea id="notificationText" rows="3" style="
+                            width: 100%;
+                            padding: 12px 15px;
+                            border: 2px solid #e0e0e0;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-family: inherit;
+                            resize: vertical;
+                        " placeholder="例如：就绪 - Facebook数据展示程序正在运行 - 当前版本支持实时数据刷新功能"></textarea>
+                        <small style="color: #8b949e; display: block; margin-top: 5px;">
+                            💡 提示：留空将使用默认通知
+                        </small>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>保存通知</button>
+                    <button type="button" class="btn" onclick="loadCurrentNotification()"><i class="fas fa-sync-alt"></i>查看当前通知</button>
+                </form>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #3498db;">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;"><i class="fas fa-eye"></i> 当前通知预览</h3>
+                    <div id="notificationPreview" style="
+                        padding: 15px;
+                        background: white;
+                        border-radius: 8px;
+                        color: #8b949e;
+                        font-size: 13px;
+                        min-height: 50px;
+                        display: flex;
+                        align-items: center;
+                    ">
+                        加载中...
+                    </div>
+                    <small style="color: #7f8c8d; display: block; margin-top: 10px;">
+                        <i class="fas fa-clock"></i> 最后更新: <span id="notificationUpdateTime">-</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 自动检测环境配置API地址
+        // 本地开发: http://localhost:8000/api
+        // 服务器部署: http://your-domain.com/auth_backend/api
+        const API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8000/api'  // 本地开发环境
+            : `${window.location.protocol}//${window.location.host}/auth_backend/api`;  // 服务器环境
+        const ADMIN_KEY = 'fb_admin_2025';
+        
+        console.log('当前API地址:', API_BASE);
+        
+        // 管理员认证配置
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'admin123'  // 建议修改为复杂密码
+        };
+        
+        // 检查登录状态
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem('admin_logged_in');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                return true;
+            } else {
+                document.getElementById('loginOverlay').style.display = 'flex';
+                return false;
+            }
+        }
+        
+        // 登录处理
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                sessionStorage.setItem('admin_logged_in', 'true');
+                sessionStorage.setItem('admin_username', username);
+                sessionStorage.setItem('login_time', new Date().toISOString());
+                
+                document.getElementById('loginOverlay').style.display = 'none';
+                showMessage('登录成功！', 'success');
+                loadDashboard();
+            } else {
+                const errorDiv = document.getElementById('loginError');
+                errorDiv.textContent = '用户名或密码错误！';
+                errorDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 3000);
+            }
+        });
+        
+        // 登出处理
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                sessionStorage.removeItem('admin_logged_in');
+                sessionStorage.removeItem('admin_username');
+                sessionStorage.removeItem('login_time');
+                location.reload();
+            }
+        }
+        
+        function showSection(sectionId) {
+            // 隐藏所有section
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // 显示目标section
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            
+            // 加载对应数据
+            if (sectionId === 'dashboard') {
+                loadDashboard();
+            } else if (sectionId === 'users') {
+                loadUsers();
+            } else if (sectionId === 'sessions') {
+                loadSessions();
+            } else if (sectionId === 'notification') {
+                loadCurrentNotification();
+            }
+        }
+        
+        function showMessage(text, type = 'success') {
+            const message = document.getElementById('message');
+            const icon = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-circle"></i>';
+            message.innerHTML = icon + text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+        
+        async function apiCall(endpoint, data = {}) {
+            try {
+                const formData = new FormData();
+                formData.append('admin_key', ADMIN_KEY);
+                
+                for (const key in data) {
+                    formData.append(key, data[key]);
+                }
+                
+                console.log('[调试] API调用:', endpoint, '数据:', Object.fromEntries(formData));
+                
+                const response = await fetch(`${API_BASE}/${endpoint}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                console.log('[调试] API响应:', result);
+                return result;
+            } catch (error) {
+                console.error('[调试] API调用失败:', error);
+                return { status: 'error', message: '网络错误' };
+            }
+        }
+        
+        async function loadDashboard() {
+            const result = await apiCall('admin.php', { action: 'list_users' });
+            
+            if (result.status === 'success') {
+                const users = result.data;
+                const now = new Date();
+                
+                let totalUsers = users.length;
+                let activeUsers = 0;
+                let onlineUsers = 0;
+                let expiredUsers = 0;
+                
+                users.forEach(user => {
+                    if (user.status === 'active') activeUsers++;
+                    if (user.online_devices > 0) onlineUsers++;
+                    if (user.license && new Date(user.license.expire_date) < now) expiredUsers++;
+                });
+                
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('activeUsers').textContent = activeUsers;
+                document.getElementById('onlineUsers').textContent = onlineUsers;
+                document.getElementById('expiredUsers').textContent = expiredUsers;
+            }
+        }
+        
+        async function loadUsers() {
+            const result = await apiCall('admin.php', { action: 'list_users' });
+            
+            if (result.status === 'success') {
+                const tbody = document.querySelector('#usersTable tbody');
+                tbody.innerHTML = '';
+                
+                result.data.forEach(user => {
+                    const row = document.createElement('tr');
+                    const license = user.license;
+                    const isExpired = license && new Date(license.expire_date) < new Date();
+                    
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td><span style="color: #999;">******</span></td>
+                        <td class="${user.status === 'active' ? 'status-active' : 'status-expired'}">${user.status}</td>
+                        <td class="${isExpired ? 'status-expired' : ''}">${license ? license.expire_date : '-'}</td>
+                        <td>${license ? (license.max_windows || 1) : '-'}</td>
+                        <td>${license ? (license.max_simulators || 10) : '-'}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-primary btn-sm" onclick="showEditQuotaDialog(${user.id}, '${user.username}', ${license ? (license.max_windows || 1) : 1}, ${license ? (license.max_simulators || 10) : 10})" title="修改窗口数量和浏览器数量">
+                                    <i class="fas fa-edit"></i> 配额
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="showAssignAccountsDialog('${user.username}')" title="为用户分配Facebook账号">
+                                    <i class="fas fa-key"></i> 账号
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="resetPassword(${user.id}, '${user.username}')" title="重置用户密码">
+                                    <i class="fas fa-lock"></i> 重置
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="extendUserTime(${user.id})" title="延长用户授权时间">
+                                    <i class="fas fa-calendar-plus"></i> 续费
+                                </button>
+                                ${user.device_bound ? `
+                                <button class="btn btn-primary btn-sm" onclick="unbindDevice(${user.id}, '${user.username}')" title="解绑设备，用户可在新设备登录">
+                                    <i class="fas fa-unlock"></i> 解绑
+                                </button>
+                                ` : ''}
+                                <button class="btn btn-primary btn-sm" onclick="kickUser(${user.id})" title="踢出用户所有在线设备">
+                                    <i class="fas fa-sign-out-alt"></i> 踢出
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id}, '${user.username}')" title="永久删除用户">
+                                    <i class="fas fa-trash-alt"></i> 删除
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                showMessage(result.message, 'error');
+            }
+        }
+        
+        async function loadSessions() {
+            const result = await apiCall('admin.php', { action: 'list_sessions' });
+            
+            if (result.status === 'success') {
+                const tbody = document.querySelector('#sessionsTable tbody');
+                tbody.innerHTML = '';
+                
+                result.data.forEach(session => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${session.user_id}</td>
+                        <td>${session.username}</td>
+                        <td>${session.device_id}</td>
+                        <td>${session.login_time}</td>
+                        <td>${session.last_heartbeat}</td>
+                        <td>${session.daily_usage}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                showMessage(result.message, 'error');
+            }
+        }
+        
+        async function extendUserTime(userId) {
+            const days = prompt('请输入要延长的天数:');
+            if (!days || isNaN(days) || days <= 0) return;
+            
+            const result = await apiCall('admin.php', {
+                action: 'extend_time',
+                user_id: userId,
+                extend_days: days
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                loadUsers();
+            }
+        }
+        
+        async function kickUser(userId) {
+            if (!confirm('确定要踢出该用户的所有在线设备吗？')) return;
+            
+            const result = await apiCall('admin.php', {
+                action: 'kick_user',
+                user_id: userId
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                loadUsers();
+                loadSessions();
+            }
+        }
+        
+        async function unbindDevice(userId, username) {
+            if (!confirm(`确定要解绑用户 "${username}" 的设备吗？\n\n解绑后：\n- 该用户将被强制退出登录\n- 用户可以在新设备上重新登录\n- 新设备将自动绑定`)) return;
+            
+            const result = await apiCall('admin.php', {
+                action: 'unbind_device',
+                user_id: userId
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                loadUsers();
+                loadSessions();
+            }
+        }
+        
+        async function deleteUser(userId, username) {
+            if (!confirm(`确定要删除用户 "${username}" 吗？\n\n此操作将同时删除：\n- 用户账号\n- 授权信息\n- 所有会话\n\n此操作不可恢复！`)) return;
+            
+            const result = await apiCall('admin.php', {
+                action: 'delete_user',
+                user_id: userId
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                loadUsers();
+                loadSessions();
+                loadDashboard();
+            }
+        }
+        
+        async function resetPassword(userId, username) {
+            const newPassword = prompt(`为用户 "${username}" 设置新密码：`);
+            if (!newPassword) return;
+            
+            if (newPassword.length < 6) {
+                showMessage('密码长度至少为6位', 'error');
+                return;
+            }
+            
+            const result = await apiCall('admin.php', {
+                action: 'reset_password',
+                user_id: userId,
+                new_password: newPassword
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+        }
+        
+        // ==================== 编辑配额功能 ====================
+        
+        function showEditQuotaDialog(userId, username, currentWindows, currentBrowsers) {
+            // 创建对话框
+            const dialog = document.createElement('div');
+            dialog.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            dialog.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 12px;
+                    padding: 30px;
+                    width: 90%;
+                    max-width: 500px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                ">
+                    <h2 style="margin: 0 0 20px 0; color: #2c3e50;">
+                        <i class="fas fa-edit"></i> 编辑用户配额
+                    </h2>
+                    <p style="color: #7f8c8d; margin-bottom: 20px;">
+                        用户: <strong>${username}</strong>
+                    </p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #34495e;">
+                            <i class="fas fa-window-restore"></i> 窗口数量（并发数）:
+                        </label>
+                        <input type="number" id="editMaxWindows" value="${currentWindows}" min="1" max="20" style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #e0e0e0;
+                            border-radius: 8px;
+                            font-size: 14px;
+                        ">
+                        <small style="color: #8b949e; display: block; margin-top: 5px;">
+                            💡 主程序同时操作的浏览器窗口数量（多线程并发数）
+                        </small>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #34495e;">
+                            <i class="fas fa-browser"></i> 浏览器数量（总账号数）:
+                        </label>
+                        <input type="number" id="editMaxSimulators" value="${currentBrowsers}" min="1" max="100" style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #e0e0e0;
+                            border-radius: 8px;
+                            font-size: 14px;
+                        ">
+                        <small style="color: #8b949e; display: block; margin-top: 5px;">
+                            💡 用户最多可以拥有的浏览器账号总数
+                        </small>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="this.closest('div').parentElement.parentElement.remove()" style="
+                            flex: 1;
+                            padding: 12px;
+                            background: #95a5a6;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            font-weight: 600;
+                        ">
+                            <i class="fas fa-times"></i> 取消
+                        </button>
+                        <button onclick="saveQuota(${userId}, this.closest('div').parentElement.parentElement)" style="
+                            flex: 1;
+                            padding: 12px;
+                            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            font-weight: 600;
+                        ">
+                            <i class="fas fa-save"></i> 保存
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+            
+            // 点击背景关闭
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    dialog.remove();
+                }
+            });
+        }
+        
+        async function saveQuota(userId, dialogElement) {
+            const maxWindows = parseInt(document.getElementById('editMaxWindows').value);
+            const maxSimulators = parseInt(document.getElementById('editMaxSimulators').value);
+            
+            // 验证输入
+            if (isNaN(maxWindows) || maxWindows < 1 || maxWindows > 20) {
+                showMessage('窗口数量必须在 1-20 之间', 'error');
+                return;
+            }
+            
+            if (isNaN(maxSimulators) || maxSimulators < 1 || maxSimulators > 100) {
+                showMessage('浏览器数量必须在 1-100 之间', 'error');
+                return;
+            }
+            
+            // 调用API更新
+            const result = await apiCall('admin.php', {
+                action: 'update_quota',
+                user_id: userId,
+                max_windows: maxWindows,
+                max_simulators: maxSimulators
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                dialogElement.remove();
+                loadUsers();
+            }
+        }
+        
+        // 创建用户表单提交
+        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                action: 'create_user',
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                expire_days: document.getElementById('expireDays').value,
+                max_windows: document.getElementById('maxWindows').value,
+                max_simulators: document.getElementById('maxSimulators').value
+            };
+            
+            const result = await apiCall('admin.php', formData);
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                document.getElementById('createUserForm').reset();
+                document.getElementById('expireDays').value = '30';
+                document.getElementById('maxWindows').value = '1';
+                document.getElementById('maxSimulators').value = '10';
+            }
+        });
+        
+        // 页面加载时初始化
+        window.addEventListener('load', () => {
+            if (checkLogin()) {
+                loadDashboard();
+            }
+        });
+        
+        // 定期检查登录状态（每5分钟）
+        setInterval(() => {
+            if (!checkLogin()) {
+                showMessage('登录已过期，请重新登录', 'error');
+            }
+        }, 5 * 60 * 1000);
+        
+        // ==================== 账号分配功能 ====================
+        
+        async function showAssignAccountsDialog(username) {
+            // 获取用户当前的账号
+            const result = await apiCall('admin.php', {
+                action: 'get_user_accounts_text',
+                username: username
+            });
+            
+            const currentAccounts = result.status === 'success' ? result.data : '';
+            
+            // 创建对话框
+            const dialog = document.createElement('div');
+            dialog.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            dialog.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 12px;
+                    padding: 30px;
+                    width: 90%;
+                    max-width: 800px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                ">
+                    <h2 style="margin: 0 0 20px 0; color: #2c3e50;">
+                        <i class="fas fa-key"></i> 为用户 "${username}" 分配账号
+                    </h2>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <p style="color: #7f8c8d; margin-bottom: 10px;">
+                            <i class="fas fa-info-circle"></i> 
+                            每行一个账号，格式：<code>c_user----密码----2FA码----邮箱----cookie----token</code>
+                        </p>
+                        <p style="color: #7f8c8d; margin-bottom: 10px;">
+                            <i class="fas fa-lightbulb"></i> 
+                            提示：可以省略后面的字段，例如：<code>123456789----password----2FA----</code>
+                        </p>
+                    </div>
+                    
+                    <textarea id="accountsTextarea" style="
+                        width: 100%;
+                        height: 400px;
+                        padding: 15px;
+                        border: 2px solid #ddd;
+                        border-radius: 8px;
+                        font-family: 'Consolas', 'Monaco', monospace;
+                        font-size: 13px;
+                        resize: vertical;
+                        margin-bottom: 20px;
+                    " placeholder="示例：
+123456789----mypassword----ABCD1234----user@example.com----
+987654321----password456------------cookie_value----
+
+# 以 # 开头的行是注释，会被忽略
+# 空行也会被忽略">${currentAccounts}</textarea>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                            padding: 10px 20px;
+                            border: 1px solid #ddd;
+                            border-radius: 6px;
+                            background: white;
+                            cursor: pointer;
+                            font-size: 14px;
+                        ">
+                            <i class="fas fa-times"></i> 取消
+                        </button>
+                        <button onclick="saveUserAccounts('${username}')" style="
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 6px;
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            cursor: pointer;
+                            font-size: 14px;
+                            font-weight: bold;
+                        ">
+                            <i class="fas fa-save"></i> 保存
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+            
+            // 点击背景关闭
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    dialog.remove();
+                }
+            });
+        }
+        
+        async function saveUserAccounts(username) {
+            const textarea = document.getElementById('accountsTextarea');
+            const accountsText = textarea.value;
+            
+            // 统计账号数量
+            const lines = accountsText.split('\n');
+            const validLines = lines.filter(line => {
+                const trimmed = line.trim();
+                return trimmed && !trimmed.startsWith('#');
+            });
+            
+            if (validLines.length === 0) {
+                if (!confirm('没有输入任何账号，确定要清空该用户的账号吗？')) {
+                    return;
+                }
+            }
+            
+            const result = await apiCall('admin.php', {
+                action: 'set_user_accounts',
+                username: username,
+                accounts: accountsText
+            });
+            
+            if (result.status === 'success') {
+                showMessage(result.message, 'success');
+                // 关闭对话框
+                document.querySelector('div[style*="position: fixed"]').remove();
+            } else {
+                showMessage(result.message, 'error');
+            }
+        }
+        
+        // ==================== 通知管理功能 ====================
+        
+        async function loadCurrentNotification() {
+            try {
+                console.log('[调试] 开始加载通知...');
+                const result = await apiCall('admin.php', { action: 'get_notification' });
+                console.log('[调试] API返回结果:', result);
+                
+                if (result.status === 'success') {
+                    const data = result.data;
+                    document.getElementById('notificationPreview').textContent = data.notification || '（无通知）';
+                    document.getElementById('notificationUpdateTime').textContent = data.updated_at || '从未更新';
+                    document.getElementById('notificationText').value = data.notification || '';
+                    console.log('[调试] 通知加载成功');
+                } else {
+                    console.error('[调试] 加载通知失败:', result.message);
+                    document.getElementById('notificationPreview').textContent = '加载失败: ' + result.message;
+                    document.getElementById('notificationUpdateTime').textContent = '-';
+                }
+            } catch (error) {
+                console.error('[调试] 加载通知异常:', error);
+                document.getElementById('notificationPreview').textContent = '加载异常';
+                document.getElementById('notificationUpdateTime').textContent = '-';
+            }
+        }
+        
+        // 通知表单提交
+        document.getElementById('notificationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const notification = document.getElementById('notificationText').value.trim();
+            
+            const result = await apiCall('admin.php', {
+                action: 'set_notification',
+                notification: notification
+            });
+            
+            showMessage(result.message, result.status === 'success' ? 'success' : 'error');
+            
+            if (result.status === 'success') {
+                loadCurrentNotification();
+            }
+        });
+    </script>
+</body>
+</html>
